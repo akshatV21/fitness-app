@@ -34,4 +34,8 @@ export class ProgramService {
     await program.save()
     return program.exercises
   }
+
+  async delete(id: string) {
+    await this.ProgramModel.deleteOne({ _id: id })
+  }
 }

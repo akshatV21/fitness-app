@@ -1,4 +1,4 @@
-import { Controller, Patch, Post, UsePipes, ValidationPipe } from '@nestjs/common'
+import { Controller, Delete, Param, Patch, Post, UsePipes, ValidationPipe } from '@nestjs/common'
 import { ProgramService } from './program.service'
 import { CreateProgramDto } from './dtos/createProgram.dto'
 import { HttpSuccessResponse } from 'src/types'
@@ -31,5 +31,11 @@ export class ProgramController {
   ): Promise<HttpSuccessResponse<Pick<ProgramDocument, 'exercises'>>> {
     const exercises = await this.programService.updateExercise(updateExerciseDto)
     return { success: true, message: 'Exercises updated successfully', data: { exercises } }
+  }
+
+  @Delete(':id')
+  async httpDeleteProgram(@Param('id') programId: string): Promise<HttpSuccessResponse<Record<'programId', string>>> {
+    await this.programService.delete(programId)
+    return { success: true, message: 'Program deleted successfully', data: { programId } }
   }
 }

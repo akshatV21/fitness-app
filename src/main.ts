@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
 import { ConfigService } from '@nestjs/config'
 import helmet from 'helmet'
-import morgan from 'morgan'
+import * as morgan from 'morgan'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
@@ -11,7 +11,7 @@ async function bootstrap() {
   const PORT = configService.get<string>('port')
 
   app.use(helmet())
-  app.use(morgan('dev'))
+  app.use(morgan('combined'))
 
   await app.listen(PORT, () => console.log(`Listening to requests on port ${PORT}`))
 }
